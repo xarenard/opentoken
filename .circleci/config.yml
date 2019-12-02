@@ -39,7 +39,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/node:8.11.1
+      - image: circleci/node:12.1.0
     working_directory: ~/repo
     steps:
       - checkout
@@ -62,3 +62,46 @@ jobs:
       - run:
           name: Audit
           command: npm run audit
+
+workflows:
+  version: 2
+  develop:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - /^feature\/.*/
+                - develop
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /^feature\/.*/
+                - develop
+  prerelease:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - /^release\/.*/
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - /^release\/.*/
+      - audit:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - /^release\/.*/
