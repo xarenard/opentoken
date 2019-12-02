@@ -26,7 +26,7 @@ describe('RFC Open Token Smith 02', () => {
         otk = new OpenTokenProvider('','PTK');
     });
 
-    describe("OpenToken | Decoding when", () => {
+    describe("When decoding OpenToken", () => {
 
         it('Using AES 128 CBC should succeed', () => {
             const token = OTK_TEST_DATAS.CIPHER_AES_128_CBC.token;
@@ -49,7 +49,7 @@ describe('RFC Open Token Smith 02', () => {
         });
     });
 
-    describe("OpenToken | Encoding When", () => {
+    describe("When encoding OpenToken", () => {
         it('Using AES 128 CBC should succeed', () => {
             const expectedToken = OTK_TEST_DATAS.CIPHER_AES_128_CBC.token;
             sinon.stub(otk,'_iv').returns(Buffer.from([0x1b,0xf7,0x7a,0x27,0x76,0xf7,0x31,0xee,0xc6,0x3a, 0xb3,0x8e,0x1e,0xb3,0x33,0x6a]));
