@@ -1,0 +1,64 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:12.1.0
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: module-cache-{{ .Branch }}
+      - run:
+          name: npm install
+          command: npm install
+      - save_cache:
+          key: module-cache-{{ .Branch }}
+          paths:
+            - ./node_modules
+      # build
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: lint
+          command: npm run lint
+
+  test:
+    docker:
+      - image: circleci/node:8.11.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          key: module-cache-{{ .Branch }}
+      - run:
+          name: Test
+          command: npm test
+  audit:
+    docker:
+      - image: circleci/node:8.11.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: module-cache-{{ .Branch }}
+      - run:
+          name: Audit
+          command: npm run audit
