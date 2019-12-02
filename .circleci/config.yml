@@ -81,6 +81,7 @@ workflows:
               only:
                 - /^feature\/.*/
                 - develop
+                - master
   prerelease:
     jobs:
       - build:
