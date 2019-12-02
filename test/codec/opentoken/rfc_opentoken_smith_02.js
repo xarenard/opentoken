@@ -1,4 +1,4 @@
-import OpenToken from "../../../lib/codec/opentoken";
+import OpenTokenProvider from "../../../lib/codec/opentoken";
 import OpenTokenCipher from "../../../lib/codec/opentoken/ciphers";
 import {assert} from 'chai';
 import sinon from 'sinon';
@@ -23,7 +23,7 @@ const OTK_TEST_DATAS = {
 describe('RFC Open Token Smith 02', () => {
     let otk = null;
     beforeEach('OpenToken instanciation', () => {
-        otk = new OpenToken('','PTK');
+        otk = new OpenTokenProvider('','PTK');
     });
 
     describe("OpenToken | Decoding when", () => {
