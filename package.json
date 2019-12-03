@@ -12,7 +12,8 @@
     "audit": "./node_modules/.bin/audit-ci --config audit-ci.json",
     "doc": "./node_modules/.bin/jsdoc -c jsdoc.json -d docs -e utf8",
     "clean-doc": "rimraf docs",
-    "coverage": "nyc mocha test/**/*.js --timeout=3000"
+    "coverage": "nyc mocha test/**/*.js --timeout=3000",
+    "dist": "npm run clean && npm run build && npm test && npm run lint && cp package.json dist/ && cp README.md dist/"
   },
   "keywords": [],
   "author": "",
