@@ -27,6 +27,7 @@
     "@istanbuljs/nyc-config-babel": "^2.1.1",
     "audit-ci": "^2.4.2",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.2.0",
     "chai": "^4.2.0",
     "eslint": "^6.7.2",

@@ -12,6 +12,6 @@
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
-    "istanbul"
+    "istanbul","add-module-exports"
   ]
 }
