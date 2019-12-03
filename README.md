@@ -41,6 +41,7 @@ console.log(token); //T1RLAQECBByloAOoWT6XlHdV4Vv-Au7BmBDv9j3jjb6jY94w_2uBIedzAA
 const payload =  new Map();
 payload.set('bar','be');
 payload.set('foo','bar');
+
 const token = otk.encodeMap(payload);
 console.log(token);
 ```
@@ -65,20 +66,20 @@ console.log(data);// Map { 'bar' => 'be', 'foo' => 'bar' }
 
 | Parameters    |  Value              | Description           |Default Value    |
 | ------------ | ---------------------- | ----------------------- | ----------- 
-| password   | any password       |  Algorithm to use     |       |
+| password   | any password       |  Password     |       |
 | prefix  | OTK |PTK             | String                  |OTK          |
 
 
 ##### Encoding parameters
 
-`encode(payload, cipher): token`
+`[token]=encode(payload, cipher)`
 
 | Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|payload      | y         |string                | None |  Raw Opentoken payload                   | N/A             |
+|payload      | y         |string                | None |  Raw OpenToken payload                   | N/A             |
 |cipher       | n         |integer                | OpenToken.CIPHER_AES_256_CBC |OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_256_CBC  | OpenToken.CIPHER_DES_TRIPLE_168_CBC                     | N/A             |
 
-`encodeMap(payload, cipher): token`
+`[token]=encodeMap(payload, cipher)`
 
 | Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
@@ -86,14 +87,14 @@ console.log(data);// Map { 'bar' => 'be', 'foo' => 'bar' }
 |cipher       | n         |integer                | OpenToken.CIPHER_AES_256_CBC |OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_256_CBC  | OpenToken.CIPHER_DES_TRIPLE_168_CBC                     | N/A             |
 
 ##### Decoding parameters
-`decode(token): Opentoken payload]`
+`[payload]=decode(token)`
 
 | Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
 |token      | y         |string                 | None |  OpenToken payload    | N/A             |
 
 
-`decodeAsMap(token): OpenToken payload as Map`
+`[payloadAsMap]=decodeAsMap(token)`
 
 | Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
