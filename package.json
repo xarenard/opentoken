@@ -16,8 +16,17 @@
     "dist": "npm run clean && npm run build && npm test && npm run lint && cp package.json dist/ && cp README.md dist/"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xarenard/opentoken/issues",
+    "email": "xagithub@gmail.com"
+  },
+  "homepage": "https://github.com/xarenard/opentoken",
+  "author": "Xavier Renard <xagithub@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xarenard/opentoken"
+  },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
