@@ -1,7 +1,8 @@
 {
   "name": "@cibel/opentoken",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.7.2",
+  "private": false,
+  "description": "OpenToken implementation",
   "main": "index.js",
   "scripts": {
     "build": "babel lib --out-dir dist",
