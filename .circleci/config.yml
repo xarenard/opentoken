@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:12.1.0
+      - image: circleci/node:8.11.1
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -21,12 +21,12 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
       - restore_cache:
-          key: module-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          key: module-cache-{{ .Branch }}-v1
       - run:
           name: npm install
           command: npm install
       - save_cache:
-          key: module-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          key: module-cache-{{ .Branch }}-v1
           paths:
             - ./node_modules
       # build
@@ -44,7 +44,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: module-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          key: module-cache-{{ .Branch }}-v1
       - run:
           name: Test
           command: npm test
@@ -58,7 +58,7 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
       - restore_cache:
-          key: module-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          key: module-cache-{{ .Branch }}-v1
       - run:
           name: Audit
           command: npm run audit
