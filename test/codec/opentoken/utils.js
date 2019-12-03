@@ -1,4 +1,4 @@
-import OpenTokenUtils from '../../../lib/codec/opentoken/utils';
+import OpenTokenUtils from '../../../src/codec/opentoken/utils';
 import {expect, assert} from 'chai';
 
 describe('OpenToken Data Conversion', () => {

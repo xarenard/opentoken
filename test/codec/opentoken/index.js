@@ -1,4 +1,4 @@
-import OpenTokenProvider from "../../../lib/codec/opentoken";
+import OpenTokenProvider from "../../../src/codec/opentoken";
 import {expect, assert} from 'chai';
 
 // see https://support.pingidentity.com/s/article/How-do-I-view-the-contents-of-an-OpenToken
@@ -30,7 +30,6 @@ describe('OpenToken Test Case', () => {
         it('Decode PBE', () => {
             const otk = new OpenTokenProvider(TEST_CASES.sample1.password);
             const value = otk.decode(TEST_CASES.sample1.token);
-            console.log(value)
             assert.equal(value,TEST_CASES.sample1.value);
             // expect(() => otk.decode('abcdefr')).to.throw('Invalid Token')
         });

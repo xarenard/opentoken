@@ -1,0 +1,15 @@
+jsdoc.json
+node_modules
+*.iml
+package-lock.json
+test
+audit-ci.json
+docs
+.mocha.opts
+.nyc_output
+.babelrc
+.nycrc
+.eslintrc.json
+.circleci
+dist/LICENSE
+dist/README

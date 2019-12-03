@@ -1,5 +1,5 @@
-import OpenTokenProvider from "../../../lib/codec/opentoken";
-import OpenTokenCipher from "../../../lib/codec/opentoken/ciphers";
+import OpenTokenProvider from "../../../src/codec/opentoken";
+import OpenTokenCipher from "../../../src/codec/opentoken/ciphers";
 import {assert} from 'chai';
 import sinon from 'sinon';
 

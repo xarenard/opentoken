@@ -1,4 +1,4 @@
-import OpenToken from "../lib";
+import OpenToken from "../src";
 import {assert, expect} from 'chai';
 
 const PAYLOAD = 'foo=bar\nbar=baz';
