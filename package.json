@@ -10,8 +10,8 @@
     "clean": "rimraf dist",
     "audit": "./node_modules/.bin/audit-ci --config audit-ci.json",
     "doc": "./node_modules/.bin/jsdoc -c jsdoc.json -d docs -e utf8",
-    "clean": "rimraf dist",
-    "clean-doc": "rimraf docs"
+    "clean-doc": "rimraf docs",
+    "coverage": "nyc mocha test/**/*.js --timeout=3000"
   },
   "keywords": [],
   "author": "",
@@ -22,13 +22,16 @@
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
+    "@istanbuljs/nyc-config-babel": "^2.1.1",
     "audit-ci": "^2.4.2",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-istanbul": "^5.2.0",
     "chai": "^4.2.0",
     "eslint": "^6.7.2",
     "jdoc": "^0.2.0",
     "jsdoc": "^3.6.3",
     "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
     "rimraf": "^3.0.0",
     "sinon": "^7.5.0"
   }

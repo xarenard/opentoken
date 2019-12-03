@@ -1,6 +1,7 @@
 import OpenTokenProvider from "../../../lib/codec/opentoken";
 import {expect, assert} from 'chai';
 
+// see https://support.pingidentity.com/s/article/How-do-I-view-the-contents-of-an-OpenToken
 const TEST_CASES = {
     'sample1': {token: 'T1RLAQKrMohNdaqjSzkinkn1yr5I_tG2LBBY2TM3XYJadvGNH9gtLx5dAACQpP00vfnLe8ev-bW4xNsUu9UzR-B5TGMSh0CbvgIuIs91UWEnU1CrVg_E_q0yToWx7COkfyuOeVLeR3M8S5l7nz_LiLEJYB2efqejdgjeu9N1-vHU8GJMl1-qCFSTurQl-1I5HLuYNi3VyTomWtPiRXpQrvgknK2KwEma14wXk40JqGOwLDcKTqpr5DJZwoN4',
                 value: 'not-before=2013-04-02T02:38:32Z\nauthnContext=urn:oasis:names:tc:SAML:2.0:ac:classes:Password\nsubject=joe\nnot-on-or-after=2013-04-02T02:43:32Z\nrenew-until=2013-04-02T14:38:32Z',
