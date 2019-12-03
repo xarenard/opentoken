@@ -1,5 +1,4 @@
 # opentoken
-Opentoken implentation (<a href="https://tools.ietf.org/html/draft-smith-opentoken-02" target="_blank">OpenToken Draft RFC</a>)
 
 [![CircleCI](https://circleci.com/gh/xarenard/opentoken/tree/master.svg?style=svg)](https://circleci.com/gh/xarenard/opentoken/tree/master)
 
@@ -13,7 +12,9 @@ Opentoken implentation (<a href="https://tools.ietf.org/html/draft-smith-opentok
 <a name="about"></a>
 ## About
 
-OpenToken impleme
+OpenToken implementation (<a href="https://tools.ietf.org/html/draft-smith-opentoken-02" target="_blank">OpenToken Draft RFC</a>)
+
+
 <a name="installation"></a>
 ## Installation
 ```
