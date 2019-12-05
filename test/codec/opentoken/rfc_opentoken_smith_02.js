@@ -23,7 +23,7 @@ const OTK_TEST_DATAS = {
 describe('RFC Open Token Smith 02', () => {
     let otk = null;
     beforeEach('OpenToken instanciation', () => {
-        otk = new OpenTokenProvider('password','PTK','PTK');
+        otk = new OpenTokenProvider('password','PTK',{prefix: 'PTK'});
     });
 
     describe("When decoding OpenToken", () => {
@@ -78,3 +78,4 @@ describe('RFC Open Token Smith 02', () => {
         });
     });
 });
+

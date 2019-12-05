@@ -32,23 +32,22 @@ class OpenTokenUtils {
 		return datas.join('\n');
 	}
 
-	static renewUntil(){
-
+	static renewUntil(seconds = 300){
+		return OpenTokenUtils._toUtc(seconds);
 	}
 	static notBefore(){
-		return this._toUtc();
+		return OpenTokenUtils._toUtc();
 	}
 
-	static notOnOrAfter() {
-
+	static notOnOrAfter(seconds = 300) {
+		return OpenTokenUtils._toUtc(seconds);
 	}
 
 	static _toUtc(seconds = 0) {
 
-		const now = new Date();
+		const now = OpenTokenUtils.date();
 		now.setUTCSeconds(now.getUTCSeconds()+ seconds);
 
-		//	const now = new Date();
 		const day = now.getUTCDate().toString().padStart(2,0);
 		const month = (now.getUTCMonth() + 1).toString().padStart(2,0);
 		const year = now.getUTCFullYear();
@@ -58,6 +57,10 @@ class OpenTokenUtils {
 
 		return `${year}-${month}-${day}T${hour}:${minutes}:${sec}Z`;
 
+	}
+
+	static date() {
+		return new Date();
 	}
 }
 

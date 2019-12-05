@@ -1,5 +1,7 @@
 import OpenTokenProvider from "../../../src/codec/opentoken";
 import {expect, assert} from 'chai';
+import sinon from "sinon";
+import OpenTokenUtils from "../../../src/codec/opentoken/utils";
 
 // see https://support.pingidentity.com/s/article/How-do-I-view-the-contents-of-an-OpenToken
 const TEST_CASES = {
@@ -35,7 +37,9 @@ describe('OpenToken Test Case', () => {
 
 
     describe('Validation token ',() => {
-
+        afterEach(function () {
+            sinon.restore();
+        });
         it('With invalid subject should throw error ', () => {
             const otk = new OpenTokenProvider('2Federate', 'joe2');
             expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid Subject');
@@ -48,6 +52,23 @@ describe('OpenToken Test Case', () => {
         it('With valid subject should succeed', () => {
             const otk = new OpenTokenProvider('2Federate', 'joe');
             expect(() => otk.validate(TEST_CASES.sample1.token)).not.to.throw('Invalid Subject');
+        });
+        it('With now before issued token should fail', () => {
+            const otk = new OpenTokenProvider('2Federate', 'joe');
+            sinon.stub(OpenTokenUtils, 'date').returns(new Date('2000-02-04'));
+            expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid token - Token issued before current date.');
+
+        });
+        it('With  issued token in time window should succeed', () => {
+            const otk = new OpenTokenProvider('2Federate', 'joe');
+            sinon.stub(OpenTokenUtils, 'date').returns(new Date('2013-04-02T02:40:32Z'));
+            const payload = otk.validate(TEST_CASES.sample1.token);
+            assert.equal(TEST_CASES.sample1.value, payload);
+
+        });
+        it('With  issued token after date limit should failed', () => {
+            const otk = new OpenTokenProvider('2Federate', 'joe');
+            expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid token - Token expired.');
         });
     });
 });

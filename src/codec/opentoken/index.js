@@ -18,10 +18,23 @@ class OpenTokenProvider {
 	subject = null;
 	password = null;
 
-	constructor(password,subject = '', prefix = 'OTK') {
-		this.subject = subject ;
+	_options;
+
+	constructor(password, subject = '', options = {}) {
+		this.subject = subject;
 		this.password = password;
-		this.prefix = prefix;
+		this._options = Object.assign({}, this._defaultOption(), options);
+	}
+
+	_defaultOption() {
+		return Object.assign(
+			{},
+			{
+				prefix: 'OTK',
+				notAfter: 300,
+				renewUntil: 300
+			}
+		);
 	}
 
 	decode(token) {
@@ -127,7 +140,7 @@ class OpenTokenProvider {
 		// append prefix
 		const openTokenItems = [];
 		//prefix
-		const prefix = Buffer.from(this.prefix);
+		const prefix = Buffer.from(this._options.prefix);
 		openTokenItems.push(prefix);
 		//version
 		const version = Buffer.from([0x01]);
@@ -139,7 +152,7 @@ class OpenTokenProvider {
 		const ivLength = OpenTokenCipher.ivLength(cipherId);
 		const iv = this._iv(ivLength);
 
-		const normalizedPayload  = this._normalizePayload(payload);
+		const normalizedPayload = this._normalizePayload(payload);
 		//push hmac
 		const hmacData = {
 			'version': 1,
@@ -165,8 +178,11 @@ class OpenTokenProvider {
 	_normalizePayload(payload) {
 		const subject = `subject=${this.subject}`;
 		const notBefore = `not-before=${OpenTokenUtils.notBefore()}`;
-		return [subject, notBefore, payload].join('\n');
+		const notAfter = `not-on-or-after=${OpenTokenUtils.notOnOrAfter()}`;
+		const renewUntil = `renew-until=${OpenTokenUtils.renewUntil()}`;
+		return [subject, notBefore, notAfter, renewUntil, payload].join('\n');
 	}
+
 	_encode(payload, cipherId = OpenTokenProvider.CIPHER_DEFAULT) {
 		const openTokenBuffer = this._pack(payload, cipherId);
 
@@ -190,20 +206,27 @@ class OpenTokenProvider {
 	validate(token) {
 		const payload = this.decode(token);
 		const kv = OpenTokenUtils.dataToMap(payload);
-		if(! (kv.has('subject') && kv.get('subject') === this.subject)){
+		if (!(kv.has('subject') && kv.get('subject') === this.subject)) {
 			throw new Error('Invalid Subject');
 		}
-
-		if(!kv.has('not-before')) {
+		if (kv.has('not-before')) {
 			const notBeforeDateString = kv.get('not-before');
-			if(new Date().getTime() < new Date(notBeforeDateString).getTime()){
-				throw new Error('Invalid token time window.');
+			if (OpenTokenUtils.date().getTime() <  new Date(notBeforeDateString).getTime()){
+				throw new Error('Invalid token - Token issued before current date.');
 			}
-		}
-		else {
-			throw new Error('Invalid token time window.');
+		} else {
+			throw new Error('Invalid token. Not-before claim missing ');
 		}
 
+		if (kv.has('not-on-or-after')) {
+			const notAfterDateString = kv.get('not-on-or-after');
+			if (OpenTokenUtils.date().getTime() > new Date(notAfterDateString).getTime()) {
+				throw new Error('Invalid token - Token expired.');
+			}
+
+		} else {
+			throw new Error('Invalid token. Not-on-or-after claim missing.');
+		}
 		return payload;
 	}
 }
