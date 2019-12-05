@@ -10,12 +10,11 @@ const TEST_CASES = {
 };
 
 describe('OpenToken Test Case', () => {
-
+/*
     describe('When decoding invalid token',() => {
         it('Should throw error when token is undefined', () => {
-            const otk = new OpenTokenProvider({cipherId: 2});
+            const otk = new OpenTokenProvider('password', 'subject');
             expect(() => otk.decode()).to.throw('Invalid Token')
-
         });
         it('Should throw error when token is null', () => {
             const otk = new OpenTokenProvider('');
@@ -28,10 +27,30 @@ describe('OpenToken Test Case', () => {
 
         });
         it('Decode PBE', () => {
-            const otk = new OpenTokenProvider(TEST_CASES.sample1.password);
+            const otk = new OpenTokenProvider(TEST_CASES.sample1.password,'');
             const value = otk.decode(TEST_CASES.sample1.token);
             assert.equal(value,TEST_CASES.sample1.value);
             // expect(() => otk.decode('abcdefr')).to.throw('Invalid Token')
         });
     });
+
+ */
+    describe('Validation token ',() => {
+
+        it('With invalid subject should throw error ', () => {
+            const otk = new OpenTokenProvider('2Federate', 'joe2');
+            expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid Subject');
+        });
+        it('With undefined subject should throw error', () => {
+            const otk = new OpenTokenProvider('2Federate', undefined);
+            expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid Subject');
+        });
+
+        it('With valid subject should succeed', () => {
+            const otk = new OpenTokenProvider('2Federate', 'joe');
+            expect(() => otk.validate(TEST_CASES.sample1.token)).not.to.throw('Invalid Subject');
+        });
+    });
+
+
 });

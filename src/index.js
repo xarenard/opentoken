@@ -18,8 +18,8 @@ class OpenToken {
 
 	_openTokenProvider;
 
-	constructor(password) {
-		this._openTokenProvider = new OpenTokenProvider(password);
+	constructor(password,subject) {
+		this._openTokenProvider = new OpenTokenProvider(password,subject);
 	}
 
 	/**
@@ -83,6 +83,9 @@ class OpenToken {
 		return OpenTokenUtils.dataToMap(payload);
 	}
 
+	validateToken(token) {
+		return this._openTokenProvider.validate(token);
+	}
 }
 
 module.exports = OpenToken;

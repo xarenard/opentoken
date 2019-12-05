@@ -1,61 +1,61 @@
 import OpenToken from "../src";
 import {assert, expect} from 'chai';
 
-const PAYLOAD = 'foo=bar\nbar=baz';
-
+const EXPECTED_PAYLOAD = 'subject=me\nfoo=bar\nbar=baz';
+const PAYLOAD_TO_ENCODE= 'foo=bar\nbar=baz'
 describe("OpenToken Test Cases", () => {
 
     let token = null;
     let otk = null;
 
     beforeEach('OpenToken instantiation', () => {
-        otk = new OpenToken('blabla');
+        otk = new OpenToken('password','me');
     });
 
     describe('When using default algorithm (AES 256)', () => {
         it('OpenToken encoding should succeed.', () => {
-            token = otk.encode(PAYLOAD);
+            token = otk.encode(PAYLOAD_TO_ENCODE);
             expect(token).to.not.equal(null);
         });
 
         it('OpenToken decoding should succeed.', () => {
             const decodedPayload = otk.decode(token);
-            assert.equal(decodedPayload, PAYLOAD);
+            assert.equal(decodedPayload, EXPECTED_PAYLOAD);
         });
     });
 
     describe('When using AES 256', () => {
         it('OpenToken encoding should succeed.', () => {
-            token = otk.encode(PAYLOAD, OpenToken.CIPHER_AES_256_CBC);
+            token = otk.encode(PAYLOAD_TO_ENCODE, OpenToken.CIPHER_AES_256_CBC);
             expect(token).to.not.equal(null);
         });
 
         it('OpenToken decoding should succeed.', () => {
             const decodedPayload = otk.decode(token);
-            assert.equal(decodedPayload, PAYLOAD);
+            assert.equal(decodedPayload, EXPECTED_PAYLOAD);
         });
     });
 
     describe('When using AES 128', () => {
         it('OpenToken encoding should succeed.', () => {
-            token = otk.encode(PAYLOAD, OpenToken.CIPHER_AES_128_CBC);
+            token = otk.encode(PAYLOAD_TO_ENCODE, OpenToken.CIPHER_AES_128_CBC);
             expect(token).to.not.equal(null);
         });
 
         it('OpenToken decoding should succeed.', () => {
             const decodedPayload = otk.decode(token);
-            assert.equal(decodedPayload, PAYLOAD);
+            assert.equal(decodedPayload, EXPECTED_PAYLOAD);
         });
     });
 
     describe('When using 3DES 168', () => {
         it('OpenToken encoding should succeed.', () => {
-            token = otk.encode(PAYLOAD, OpenToken.CIPHER_DES_TRIPLE_168_CBC);
+            token = otk.encode(PAYLOAD_TO_ENCODE, OpenToken.CIPHER_DES_TRIPLE_168_CBC);
             expect(token).to.not.equal(null);
         });
         it('OpenToken decoding should succeed.', () => {
             const decodedPayload = otk.decode(token);
-            assert.equal(decodedPayload, PAYLOAD);
+            assert.equal(decodedPayload, EXPECTED_PAYLOAD);
         });
     });
     describe('When using Key value Map', () => {

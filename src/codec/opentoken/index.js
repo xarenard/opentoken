@@ -1,6 +1,7 @@
 import {createHmac, randomBytes, createCipheriv, createDecipheriv, pbkdf2Sync} from 'crypto';
 import {inflateSync, deflateSync} from 'zlib';
 import OpenTokenCipher from './ciphers';
+import OpenTokenUtils from './utils';
 //import OpenTokenUtils from './utils';
 
 class OpenTokenProvider {
@@ -13,9 +14,11 @@ class OpenTokenProvider {
 	static CIPHER_DEFAULT = OpenTokenProvider.CIPHER_AES_256_CBC;
 
 	prefix = null;
+	subject = null;
 	password = null;
 
-	constructor(password, prefix = 'OTK') {
+	constructor(password,subject = '', prefix = 'OTK') {
+		this.subject = subject ;
 		this.password = password;
 		this.prefix = prefix;
 	}
@@ -134,13 +137,15 @@ class OpenTokenProvider {
 		//iv and hmac
 		const ivLength = OpenTokenCipher.ivLength(cipherId);
 		const iv = this._iv(ivLength);
+
+		const normalizedPayload  = this._normalizePayload(payload);
 		//push hmac
 		const hmacData = {
 			'version': 1,
 			'cipher': cipherId,
 			'iv': iv,
 			'key-info': null,
-			'payload': payload
+			'payload': normalizedPayload
 		};
 		const hmac = this._hmac(hmacData);
 		openTokenItems.push(hmac);
@@ -148,7 +153,7 @@ class OpenTokenProvider {
 		openTokenItems.push(iv);
 		openTokenItems.push(Buffer.from([0x00]));
 		// payload
-		const payloadEncrypted = this._encryptPayload(payload, iv, cipherId);
+		const payloadEncrypted = this._encryptPayload(normalizedPayload, iv, cipherId);
 		const payloadLengthSizeBuffer = Buffer.allocUnsafe(2);
 		payloadLengthSizeBuffer.writeUInt16BE(payloadEncrypted.length, 0);
 		openTokenItems.push(payloadLengthSizeBuffer);
@@ -156,6 +161,9 @@ class OpenTokenProvider {
 		return Buffer.concat(openTokenItems);
 	}
 
+	_normalizePayload(payload) {
+		return  `subject=${this.subject}\n${payload}`;
+	}
 	_encode(payload, cipherId = OpenTokenProvider.CIPHER_DEFAULT) {
 		const openTokenBuffer = this._pack(payload, cipherId);
 
@@ -174,6 +182,15 @@ class OpenTokenProvider {
 
 	_iv(ivLength) {
 		return randomBytes(ivLength);
+	}
+
+	validate(token) {
+		const payload = this.decode(token);
+		const kv = OpenTokenUtils.dataToMap(payload);
+		if(! (kv.has('subject') && kv.get('subject') === this.subject)){
+			throw new Error('Invalid Subject');
+		}
+		return payload;
 	}
 }
 
