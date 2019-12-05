@@ -2,6 +2,7 @@ import {createHmac, randomBytes, createCipheriv, createDecipheriv, pbkdf2Sync} f
 import {inflateSync, deflateSync} from 'zlib';
 import OpenTokenCipher from './ciphers';
 import OpenTokenUtils from './utils';
+
 //import OpenTokenUtils from './utils';
 
 class OpenTokenProvider {
@@ -162,7 +163,9 @@ class OpenTokenProvider {
 	}
 
 	_normalizePayload(payload) {
-		return  `subject=${this.subject}\n${payload}`;
+		const subject = `subject=${this.subject}`;
+		const notBefore = `not-before=${OpenTokenUtils.notBefore()}`;
+		return [subject, notBefore, payload].join('\n');
 	}
 	_encode(payload, cipherId = OpenTokenProvider.CIPHER_DEFAULT) {
 		const openTokenBuffer = this._pack(payload, cipherId);
@@ -190,6 +193,17 @@ class OpenTokenProvider {
 		if(! (kv.has('subject') && kv.get('subject') === this.subject)){
 			throw new Error('Invalid Subject');
 		}
+
+		if(!kv.has('not-before')) {
+			const notBeforeDateString = kv.get('not-before');
+			if(new Date().getTime() < new Date(notBeforeDateString).getTime()){
+				throw new Error('Invalid token time window.');
+			}
+		}
+		else {
+			throw new Error('Invalid token time window.');
+		}
+
 		return payload;
 	}
 }

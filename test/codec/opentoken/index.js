@@ -10,7 +10,7 @@ const TEST_CASES = {
 };
 
 describe('OpenToken Test Case', () => {
-/*
+
     describe('When decoding invalid token',() => {
         it('Should throw error when token is undefined', () => {
             const otk = new OpenTokenProvider('password', 'subject');
@@ -30,11 +30,10 @@ describe('OpenToken Test Case', () => {
             const otk = new OpenTokenProvider(TEST_CASES.sample1.password,'');
             const value = otk.decode(TEST_CASES.sample1.token);
             assert.equal(value,TEST_CASES.sample1.value);
-            // expect(() => otk.decode('abcdefr')).to.throw('Invalid Token')
         });
     });
 
- */
+
     describe('Validation token ',() => {
 
         it('With invalid subject should throw error ', () => {
@@ -51,6 +50,4 @@ describe('OpenToken Test Case', () => {
             expect(() => otk.validate(TEST_CASES.sample1.token)).not.to.throw('Invalid Subject');
         });
     });
-
-
 });

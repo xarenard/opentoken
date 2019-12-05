@@ -1,13 +1,16 @@
 import OpenToken from "../src";
 import {assert, expect} from 'chai';
-
-const EXPECTED_PAYLOAD = 'subject=me\nfoo=bar\nbar=baz';
+import sinon from 'sinon';
+import OpenTokenUtils from "../src/codec/opentoken/utils";
+const NOT_BEFORE_CLAIM='2013-04-02T02:38:32Z';
+const EXPECTED_PAYLOAD = `subject=me\nnot-before=${NOT_BEFORE_CLAIM}\nfoo=bar\nbar=baz`;
 const PAYLOAD_TO_ENCODE= 'foo=bar\nbar=baz'
+
 describe("OpenToken Test Cases", () => {
 
     let token = null;
     let otk = null;
-
+    sinon.stub(OpenTokenUtils,'notBefore').returns(NOT_BEFORE_CLAIM);
     beforeEach('OpenToken instantiation', () => {
         otk = new OpenToken('password','me');
     });
@@ -27,11 +30,16 @@ describe("OpenToken Test Cases", () => {
     describe('When using AES 256', () => {
         it('OpenToken encoding should succeed.', () => {
             token = otk.encode(PAYLOAD_TO_ENCODE, OpenToken.CIPHER_AES_256_CBC);
+
             expect(token).to.not.equal(null);
         });
 
         it('OpenToken decoding should succeed.', () => {
+    //        const o = sinon.stub(OpenTokenUtils,'notBefore').returns(NOT_BEFORE_CLAIM);
+      //      console.log(o+'rrrrrrrrrrrrrrrrrrrrrrrrr')
+            console.log('eeeeeeeeeeeeeeeeeeee')
             const decodedPayload = otk.decode(token);
+
             assert.equal(decodedPayload, EXPECTED_PAYLOAD);
         });
     });
@@ -43,6 +51,8 @@ describe("OpenToken Test Cases", () => {
         });
 
         it('OpenToken decoding should succeed.', () => {
+        //    const o = sinon.stub(OpenTokenUtils,'notBefore').returns(NOT_BEFORE_CLAIM);
+
             const decodedPayload = otk.decode(token);
             assert.equal(decodedPayload, EXPECTED_PAYLOAD);
         });

@@ -31,6 +31,34 @@ class OpenTokenUtils {
 		});
 		return datas.join('\n');
 	}
+
+	static renewUntil(){
+
+	}
+	static notBefore(){
+		return this._toUtc();
+	}
+
+	static notOnOrAfter() {
+
+	}
+
+	static _toUtc(seconds = 0) {
+
+		const now = new Date();
+		now.setUTCSeconds(now.getUTCSeconds()+ seconds);
+
+		//	const now = new Date();
+		const day = now.getUTCDate().toString().padStart(2,0);
+		const month = (now.getUTCMonth() + 1).toString().padStart(2,0);
+		const year = now.getUTCFullYear();
+		const hour = now.getUTCHours().toString().padStart(2,0);
+		const minutes = now.getUTCMinutes().toString().padStart(2,0);
+		const sec = now.getUTCSeconds().toString().padStart(2,0);
+
+		return `${year}-${month}-${day}T${hour}:${minutes}:${sec}Z`;
+
+	}
 }
 
 export default OpenTokenUtils;
