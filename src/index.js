@@ -18,8 +18,8 @@ class OpenToken {
 
 	_openTokenProvider;
 
-	constructor(password,subject) {
-		this._openTokenProvider = new OpenTokenProvider(password,subject);
+	constructor(password,subject, options = {}) {
+		this._openTokenProvider = new OpenTokenProvider(password,subject, options);
 	}
 
 	/**

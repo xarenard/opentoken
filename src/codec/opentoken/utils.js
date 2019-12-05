@@ -33,19 +33,22 @@ class OpenTokenUtils {
 	}
 
 	static renewUntil(seconds = 300){
-		return OpenTokenUtils._toUtc(seconds);
+		const now = OpenTokenUtils.date();
+		return OpenTokenUtils._toUtc(now, seconds);
 	}
 	static notBefore(){
-		return OpenTokenUtils._toUtc();
+		const now = OpenTokenUtils.date();
+		return OpenTokenUtils._toUtc(now);
 	}
 
 	static notOnOrAfter(seconds = 300) {
-		return OpenTokenUtils._toUtc(seconds);
+		const now = OpenTokenUtils.date();
+		return OpenTokenUtils._toUtc(now, seconds);
 	}
 
-	static _toUtc(seconds = 0) {
+	static _toUtc(now = new Date, seconds = 0) {
 
-		const now = OpenTokenUtils.date();
+		//		const now = OpenTokenUtils.date();
 		now.setUTCSeconds(now.getUTCSeconds()+ seconds);
 
 		const day = now.getUTCDate().toString().padStart(2,0);

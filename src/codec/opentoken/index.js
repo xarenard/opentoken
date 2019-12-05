@@ -178,8 +178,8 @@ class OpenTokenProvider {
 	_normalizePayload(payload) {
 		const subject = `subject=${this.subject}`;
 		const notBefore = `not-before=${OpenTokenUtils.notBefore()}`;
-		const notAfter = `not-on-or-after=${OpenTokenUtils.notOnOrAfter()}`;
-		const renewUntil = `renew-until=${OpenTokenUtils.renewUntil()}`;
+		const notAfter = `not-on-or-after=${OpenTokenUtils.notOnOrAfter(this._options.notAfter)}`;
+		const renewUntil = `renew-until=${OpenTokenUtils.renewUntil(this._options.renewUntil)}`;
 		return [subject, notBefore, notAfter, renewUntil, payload].join('\n');
 	}
 
