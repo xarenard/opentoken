@@ -37,7 +37,7 @@ class OpenToken {
 	 */
 	encode(payload, subject) {
 		if (!payload || typeof payload !== 'string') {
-			throw new Error('Invalid payload.');
+			throw new Error('Invalid payload');
 		}
 		return this._openTokenProvider.encode(payload, subject);
 	}
@@ -52,7 +52,7 @@ class OpenToken {
 	 */
 	encodeMap(map, subject) {
 		if (!map || !(map instanceof Map)) {
-			throw new Error('Invalid type. Map type is required.');
+			throw new Error('Invalid type. Map type is required');
 		}
 		const payload = OpenTokenUtils.mapToData(map);
 		return this.encode(payload, subject);
@@ -66,7 +66,7 @@ class OpenToken {
 	 * @returns payload OpenToken payload
 	 */
 	decode(token) {
-		if (!token) {
+		if (!token || typeof token !== 'string') {
 			throw new Error('Invalid Token');
 		}
 		return this._openTokenProvider.decode(token).toString();
@@ -80,7 +80,7 @@ class OpenToken {
 	 * @returns payload OpenToken payload Map
 	 */
 	decodeAsMap(token) {
-		if (!token) {
+		if (!token || typeof token !== 'string') {
 			throw new Error('Invalid Token');
 		}
 
