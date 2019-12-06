@@ -52,7 +52,9 @@ jobs:
           command: npm test
       - run:
           name: report-coverage
-          command: npm run report-coverage
+          command:|
+            mkdir coverage
+            npm run report-coverage
 
   audit:
     docker:
