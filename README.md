@@ -1,8 +1,10 @@
 # opentoken
 
-[![CircleCI](https://circleci.com/gh/xarenard/opentoken/tree/master.svg?style=svg)](https://circleci.com/gh/xarenard/opentoken/tree/master)
-[![codecov](https://codecov.io/gh/xarenard/opentoken/branch/master/graph/badge.svg)](https://codecov.io/gh/xarenard/opentoken)
+[![CircleCI](https://circleci.com/gh/xarenard/opentoken/tree/master.svg?style=shield)](https://circleci.com/gh/xarenard/opentoken/tree/master)
 [![Known Vulnerabilities](https://snyk.io/test/github/xarenard/opentoken/badge.svg?targetFile=package.json)](https://snyk.io/test/github/xarenard/opentoken?targetFile=package.json)
+[![codecov](https://codecov.io/gh/xarenard/opentoken/branch/master/graph/badge.svg)](https://codecov.io/gh/xarenard/opentoken)
+![npm](https://img.shields.io/npm/dw/@cibel/opentoken)
+![GitHub](https://img.shields.io/github/license/xarenard/opentoken)
 
 - [About](#about)
 - [Installation](#installation)
