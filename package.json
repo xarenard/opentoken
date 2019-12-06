@@ -14,6 +14,7 @@
     "doc": "./node_modules/.bin/jsdoc -c jsdoc.json -d docs -e utf8",
     "clean-doc": "rimraf docs",
     "coverage": "nyc mocha test/**/*.js --timeout=3000",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage/coverage.lcov && codecov",
     "dist": "npm run clean && npm run build && npm test && npm run lint && npm run audit"
   },
   "keywords": [],
@@ -44,6 +45,7 @@
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.2.0",
     "chai": "^4.2.0",
+    "codecov": "^3.6.1",
     "eslint": "^6.7.2",
     "jdoc": "^0.2.0",
     "jsdoc": "^3.6.3",
