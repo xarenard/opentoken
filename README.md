@@ -30,8 +30,6 @@ npm install --save @cibel/opentoken
 #### Import
 ```js
 const OpenToken = require('@cibel/opentoken');
-
-const otk = new OpenToken('mypassword');
 ```
 #### Encoding
 
@@ -114,10 +112,10 @@ console.log(data);//bar=be\nfoo=bar
 ##### Constructor parameters
 
 
-| Parameters   |  Value                  | Mandatory|      Description|    |Default Value                     |
-| ------------ | ------------------------|--------| ----------------------- | ---------------------------
-| password     | any password            |Yes     |  Password               |                                 |
-| options {}   |  {notAfter, renewUntil, cipher} | No| OpenToken validation Options |   {notAfter:300, renewUntil:300,OpenToken.CIPHER_AES_256_CBC}|
+| Parameters   |  Value                  | Mandatory  |      Description              |    Default Value           |          
+| ------------ | ------------------------|------------|-------------------------------| ---------------------------
+| password     | any password            |Yes         |  Password                     |  N/A                       |
+| options {}   |  {notAfter, renewUntil, cipher} | No | OpenToken validation Options  |  {notAfter:300, renewUntil:300,OpenToken.CIPHER_AES_256_CBC}|
 
 
 ##### Encoding parameters
