@@ -137,3 +137,9 @@ describe("OpenToken Test Cases", () => {
 		});
 	})
 });
+
+const otk = new OpenToken('mypassword');
+const token = otk.encode(PAYLOAD_TO_ENCODE,'Alice');
+console.log(token);
+const p = otk.decodeAsMap(token);
+console.log(p);
