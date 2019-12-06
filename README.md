@@ -35,24 +35,29 @@ const otk = new OpenToken('mypassword');
 ```
 #### Encoding
 
+##### Instantiation
 ```js
 // instantiate with pbe password
 const otk = new OpenToken('mypassword');
 //or instantiate with options
 const otk = new OpenToken('mypassword',{notAfter: 300,renewUntil: 300, cipher: OpenToken.CIPHER_AES_256_CBC});
+```
 
-
-/// Encode from raw payload
+##### Encoding from raw data
+```js
+/// Encode raw payload
 const payload = 'bar=be\nfoo=bar';
 const token = otk.encode(payload);
 console.log(token); //T1RLAQECBByloAOoWT6XlHdV4Vv-Au7BmBDv9j3jjb6jY94w_2uBIedzAAAgsPNMulP3-r07X-S8a3_u9d5EZIvCK_9ujvvEnYk3MSM*
 
-///Or encode from raw payload with subject
+///Or encode raw payload with subject
 const subject = 'mysubject';
 const token = otk.encode(payload, subject);
 console.log(token); //T1RLAQECBByloAOoWT6XlHdV4Vv-Au7BmBDv9j3jjb6jY94w_2uBIedzAAAgsPNMulP3-r07X-S8a3_u9d5EZIvCK_9ujvvEnYk3MSM*
+```
 
-
+##### Encoding from Map
+```js
 // Encode from map
 const payload =  new Map();
 payload.set('bar','be');
@@ -68,14 +73,19 @@ console.log(token);
 
 ```
 #### Decoding
+##### Instantiation
 ```js
 const otk = new OpenToken('mypassword');
+```
 
+##### Decode to OpenToken format
+```js
 const data = otk.decode(token);
 console.log(data);//bar=be\nfoo=bar
+```
 
-//or
-
+##### Decode to Map
+```js
 const data = otk.decodeAsMap(token);
 console.log(data);// Map { 'bar' => 'be', 'foo' => 'bar' }
 
@@ -85,19 +95,17 @@ console.log(data);// Map { 'bar' => 'be', 'foo' => 'bar' }
 ```js
 const otk = new OpenToken('mypassword');
 
-
 const data = otk.validate(token);
 
 //or if we want to validate the subject
 const subjectToBeValidated = 'mysubject';
 const data = otk.validate(token,subjectToVBeValidated);
-
 console.log(data);//bar=be\nfoo=bar
-
 ```
 
 <a name="configuration"></a>
 #### Configuration
+
 ##### Constants
 - OpenToken.CIPHER_AES_256_CBC 
 - OpenToken.CIPHER_AES_128_CBC 
