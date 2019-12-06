@@ -18,39 +18,44 @@ class OpenToken {
 
 	_openTokenProvider;
 
-	constructor(password,subject, options = {}) {
-		this._openTokenProvider = new OpenTokenProvider(password,subject, options);
+	/**
+	 * Constructor
+	 * @param password
+	 * @param options
+	 */
+	constructor(password, options = {}) {
+		this._openTokenProvider = new OpenTokenProvider(password, options);
 	}
 
 	/**
 	 * Encode to an Opentoken
 	 *
 	 * @param {string} payload opentoken plaintext payload format
-	 * @param {integer} [cipher=OpenToken.CIPHER_AES_256_CBC]  OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_TRIPLE_168_CBC
+	 * @param {string} [subject] The subject to which this token applies
 
 	 * @returns token OpenToken base64 encoded
 	 */
-	encode(payload, cipher = OpenToken.CIPHER_DEFAULT) {
+	encode(payload, subject) {
 		if (!payload || typeof payload !== 'string') {
 			throw new Error('Invalid payload.');
 		}
-		return this._openTokenProvider.encode(payload, cipher);
+		return this._openTokenProvider.encode(payload, subject);
 	}
 
 	/**
 	 * Encode to an Opentoken
 	 *
 	 * @param {Map} payload opentoken as Key value Map
-	 * @param {integer} [cipher=OpenToken.CIPHER_AES_256_CBC]  OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_TRIPLE_168_CBC
+	 * @param {string} [subject]  The subject to which this token applies to.
 
 	 * @returns token OpenToken base64 encoded
 	 */
-	encodeMap(map, cipher = OpenToken.CIPHER_DEFAULT) {
+	encodeMap(map, subject) {
 		if (!map || !(map instanceof Map)) {
 			throw new Error('Invalid type. Map type is required.');
 		}
 		const payload = OpenTokenUtils.mapToData(map);
-		return this.encode(payload, cipher);
+		return this.encode(payload, subject);
 	}
 
 	/**
@@ -83,8 +88,12 @@ class OpenToken {
 		return OpenTokenUtils.dataToMap(payload);
 	}
 
-	validateToken(token) {
-		return this._openTokenProvider.validate(token);
+	validateToken(token, subject) {
+		return this._openTokenProvider.validate(token, subject);
+	}
+
+	get options(){
+		return null;
 	}
 }
 

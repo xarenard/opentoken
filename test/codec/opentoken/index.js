@@ -15,7 +15,7 @@ describe('OpenToken Test Case', () => {
 
     describe('When decoding invalid token',() => {
         it('Should throw error when token is undefined', () => {
-            const otk = new OpenTokenProvider('password', 'subject');
+            const otk = new OpenTokenProvider('password');
             expect(() => otk.decode()).to.throw('Invalid Token')
         });
         it('Should throw error when token is null', () => {
@@ -41,28 +41,27 @@ describe('OpenToken Test Case', () => {
             sinon.restore();
         });
         it('With invalid subject should throw error ', () => {
-            const otk = new OpenTokenProvider('2Federate', 'joe2');
-            expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid Subject');
+            const otk = new OpenTokenProvider('2Federate');
+            expect(() => otk.validate(TEST_CASES.sample1.token,'joe2')).to.throw('Invalid Subject');
         });
-        it('With undefined subject should throw error', () => {
-            const otk = new OpenTokenProvider('2Federate', undefined);
-            expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid Subject');
+        it('With undefined subject should succeed - no subject validation', () => {
+            sinon.stub(OpenTokenUtils, 'date').returns(new Date('2013-04-02T02:40:32Z'));
+            const otk = new OpenTokenProvider('2Federate');
         });
-
         it('With valid subject should succeed', () => {
-            const otk = new OpenTokenProvider('2Federate', 'joe');
-            expect(() => otk.validate(TEST_CASES.sample1.token)).not.to.throw('Invalid Subject');
+            const otk = new OpenTokenProvider('2Federate');
+            expect(() => otk.validate(TEST_CASES.sample1.token,'joe')).not.to.throw('Invalid Subject');
         });
         it('With now before issued token should fail', () => {
-            const otk = new OpenTokenProvider('2Federate', 'joe');
+            const otk = new OpenTokenProvider('2Federate');
             sinon.stub(OpenTokenUtils, 'date').returns(new Date('2000-02-04'));
-            expect(() => otk.validate(TEST_CASES.sample1.token)).to.throw('Invalid token - Token issued before current date.');
+            expect(() => otk.validate(TEST_CASES.sample1.token,'joe')).to.throw('Invalid token - Token issued before current date.');
 
         });
         it('With  issued token in time window should succeed', () => {
-            const otk = new OpenTokenProvider('2Federate', 'joe');
+            const otk = new OpenTokenProvider('2Federate');
             sinon.stub(OpenTokenUtils, 'date').returns(new Date('2013-04-02T02:40:32Z'));
-            const payload = otk.validate(TEST_CASES.sample1.token);
+            const payload = otk.validate(TEST_CASES.sample1.token,'joe');
             assert.equal(TEST_CASES.sample1.value, payload);
 
         });

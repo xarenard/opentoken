@@ -27,18 +27,26 @@ npm install --save @cibel/opentoken
 <a name="example"></a>
 ### Example
 
-#### Instantiation
+#### Import
 ```js
 const OpenToken = require('@cibel/opentoken');
+
 const otk = new OpenToken('mypassword');
 ```
 #### Encoding
 ```js
-/// from raw payload
+const otk = new OpenToken('mypassword');
+//or
+const otk = new OpenToken('mypassword','mysubject');
+//or
+const otk = new OpenToken('mypassword','mysubject',{notAfter: 300,renewUntil: 300});
+
+
+/// Encoding from raw payload
 const token = otk.encode('bar=be\nfoo=bar');
 console.log(token); //T1RLAQECBByloAOoWT6XlHdV4Vv-Au7BmBDv9j3jjb6jY94w_2uBIedzAAAgsPNMulP3-r07X-S8a3_u9d5EZIvCK_9ujvvEnYk3MSM*
 
-// from map
+// Encoding from map
 const payload =  new Map();
 payload.set('bar','be');
 payload.set('foo','bar');
@@ -48,8 +56,29 @@ console.log(token);
 ```
 #### Decoding
 ```js
+const otk = new OpenToken('mypassword');
 
 const data = otk.decode(token);
+console.log(data);//bar=be\nfoo=bar
+
+//or
+
+const data = otk.decodeAsMap(token);
+console.log(data);// Map { 'bar' => 'be', 'foo' => 'bar' }
+
+```
+
+#### Validation
+```js
+const otk = new OpenToken('mypassword');
+
+
+const data = otk.validate(token);
+
+//or if we want to validate the subject
+const subjectToBeValidated = 'mysubject';
+const data = otk.validate(token,subjectToVBeValidated);
+
 console.log(data);//bar=be\nfoo=bar
 
 //or
@@ -65,42 +94,50 @@ console.log(data);// Map { 'bar' => 'be', 'foo' => 'bar' }
 ##### Constructor parameters
 
 
-| Parameters    |  Value              | Description           |Default Value    |
-| ------------ | ---------------------- | ----------------------- | ----------- 
-| password   | any password       |  Password     |       |
-| prefix  | OTK |PTK             | String                  |OTK          |
+| Parameters   |  Value                  | Mandatory|      Description|    |Default Value                     |
+| ------------ | ------------------------|--------| ----------------------- | ---------------------------
+| password     | any password            |Yes     |  Password               |                                 |
+| subject      | ''                      |No  | Subject of the token        |   empty string                  |
+| options {}   |  {notAfter, renewUntil} | No| OpenToken validation Options |   {notAfter:300, renewUntil:300}|
 
 
 ##### Encoding parameters
 
 `[token]=encode(payload, cipher)`
 
-| Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|payload      | y         |string                | None |  Raw OpenToken payload                   | N/A             |
-|cipher       | n         |integer                | OpenToken.CIPHER_AES_256_CBC |OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_256_CBC  | OpenToken.CIPHER_DES_TRIPLE_168_CBC                     | N/A             |
+|payload      | Yes        |string                | None |  Raw OpenToken payload                   | N/A             |
+|cipher       | No        |integer                | OpenToken.CIPHER_AES_256_CBC |OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_256_CBC  | OpenToken.CIPHER_DES_TRIPLE_168_CBC                     | N/A             |
 
 `[token]=encodeMap(payload, cipher)`
 
-| Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|payload      | y         |Map                | None |  Key value map                  | N/A             |
-|cipher       | n         |integer                | OpenToken.CIPHER_AES_256_CBC |OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_256_CBC  | OpenToken.CIPHER_DES_TRIPLE_168_CBC                     | N/A             |
+|payload      | Yes        |Map                | None |  Key value map                  | N/A             |
+|cipher       | No       |integer                | OpenToken.CIPHER_AES_256_CBC |OpenToken.CIPHER_AES_256_CBC | OpenToken.CIPHER_AES_128_CBC | OpenToken.CIPHER_DES_256_CBC  | OpenToken.CIPHER_DES_TRIPLE_168_CBC                     | N/A             |
 
 ##### Decoding parameters
 `[payload]=decode(token)`
 
-| Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|token      | y         |string                 | None |  OpenToken payload    | N/A             |
+|token      | Yes         |string                 | None |  OpenToken payload    | N/A             |
 
 
 `[payloadAsMap]=decodeAsMap(token)`
 
-| Option    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument   | Mandatory | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
 |token      | y         |string                 | None |  OpenToken payload as Map       | N/A             |
 
+##### Validate parameters
+`[payload]=validate(token,subject)`
+
+| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+|------------|-----------|---------------------------|-------|---------------------------------|-----------------|
+|token       | Yes         |string                 | None |  OpenToken payload    | N/A             |
+|subject     | No          |string                 | None |  OpenToken subject to check for    | N/A             |
        
 <a name="references"></a>
 ## References

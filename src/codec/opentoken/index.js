@@ -13,15 +13,14 @@ class OpenTokenProvider {
 	static CIPHER_DES_TRIPLE_168_CBC = 3;
 	static CIPHER_HMAC_HASH = 'sha1';
 	static CIPHER_DEFAULT = OpenTokenProvider.CIPHER_AES_256_CBC;
+	static DEFAULT_SUBJECT = 'opentoken';
 
 	prefix = null;
-	subject = null;
 	password = null;
 
 	_options;
 
-	constructor(password, subject = '', options = {}) {
-		this.subject = subject;
+	constructor(password, options = {}) {
 		this.password = password;
 		this._options = Object.assign({}, this._defaultOption(), options);
 	}
@@ -32,7 +31,8 @@ class OpenTokenProvider {
 			{
 				prefix: 'OTK',
 				notAfter: 300,
-				renewUntil: 300
+				renewUntil: 300,
+				cipher: OpenTokenProvider.CIPHER_DEFAULT
 			}
 		);
 	}
@@ -45,13 +45,16 @@ class OpenTokenProvider {
 		return this._decode(token).toString('utf8');
 	}
 
-	encode(payload, cipherId = OpenTokenProvider.CIPHER_DEFAULT) {
+	encode(payload, subject = OpenTokenProvider.DEFAULT_SUBJECT) {
 		if (!payload) {
 			throw new Error('Invalid Token.');
 		}
-		return this._encode(payload, cipherId);
+		return this._encode(payload, subject, this.options.cipher);
 	}
 
+	get options() {
+		return this._options;
+	}
 	_hmac(data) {
 		const {version, cipher, iv, payload} = data;
 		const cipherId = cipher;
@@ -136,11 +139,11 @@ class OpenTokenProvider {
 		return inflateSync(payloadDeflated);
 	}
 
-	_pack(payload, cipherId) {
+	_pack(payload, subject = OpenTokenProvider.DEFAULT_SUBJECT, cipherId = OpenTokenProvider.CIPHER_DEFAULT) {
 		// append prefix
 		const openTokenItems = [];
 		//prefix
-		const prefix = Buffer.from(this._options.prefix);
+		const prefix = Buffer.from(this.options.prefix);
 		openTokenItems.push(prefix);
 		//version
 		const version = Buffer.from([0x01]);
@@ -152,7 +155,7 @@ class OpenTokenProvider {
 		const ivLength = OpenTokenCipher.ivLength(cipherId);
 		const iv = this._iv(ivLength);
 
-		const normalizedPayload = this._normalizePayload(payload);
+		const normalizedPayload = this._normalizePayload(payload, subject);
 		//push hmac
 		const hmacData = {
 			'version': 1,
@@ -175,16 +178,16 @@ class OpenTokenProvider {
 		return Buffer.concat(openTokenItems);
 	}
 
-	_normalizePayload(payload) {
-		const subject = `subject=${this.subject}`;
+	_normalizePayload(payload, sub = OpenTokenProvider.DEFAULT_SUBJECT) {
+		const subject = `subject=${sub}`;
 		const notBefore = `not-before=${OpenTokenUtils.notBefore()}`;
 		const notAfter = `not-on-or-after=${OpenTokenUtils.notOnOrAfter(this._options.notAfter)}`;
 		const renewUntil = `renew-until=${OpenTokenUtils.renewUntil(this._options.renewUntil)}`;
 		return [subject, notBefore, notAfter, renewUntil, payload].join('\n');
 	}
 
-	_encode(payload, cipherId = OpenTokenProvider.CIPHER_DEFAULT) {
-		const openTokenBuffer = this._pack(payload, cipherId);
+	_encode(payload, subject = OpenTokenProvider.DEFAULT_SUBJECT, cipherId = OpenTokenProvider.CIPHER_DEFAULT) {
+		const openTokenBuffer = this._pack(payload, subject, cipherId);
 
 		return openTokenBuffer.toString('base64')
 			.replace(/\//g, '_')
@@ -203,11 +206,13 @@ class OpenTokenProvider {
 		return randomBytes(ivLength);
 	}
 
-	validate(token) {
+	validate(token, subject) {
 		const payload = this.decode(token);
 		const kv = OpenTokenUtils.dataToMap(payload);
-		if (!(kv.has('subject') && kv.get('subject') === this.subject)) {
-			throw new Error('Invalid Subject');
+		if( subject) {
+			if (!(kv.has('subject') && kv.get('subject') === subject)) {
+				throw new Error('Invalid Subject');
+			}
 		}
 		if (kv.has('not-before')) {
 			const notBeforeDateString = kv.get('not-before');
