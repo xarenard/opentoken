@@ -14,7 +14,7 @@
     "doc": "./node_modules/.bin/jsdoc -c jsdoc.json -d docs -e utf8",
     "clean-doc": "rimraf docs",
     "coverage": "nyc mocha test/**/*.js --timeout=3000",
-    "report-coverage": "nyc report --reporter=text-lcov > coverage/coverage.lcov && codecov",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "dist": "npm run clean && npm run build && npm test && npm run lint && npm run audit"
   },
   "keywords": [],
