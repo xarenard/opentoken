@@ -46,10 +46,10 @@ const otk = new OpenToken('mypassword',{notAfter: 300,renewUntil: 300, cipher: O
 ```js
 /// Encode from raw OpenToken format
 const subject = 'Alice';
-const payload = 'bar=be\nfoo=bar';
+const payload = 'foo=bar\nbar=baz';
 const token = otk.encode(payload, subject);
 console.log(token); 
-//T1RLAQHcMmfr608O7egZTB-JzPHj1_b8OxDQBcl8b3DSqDRVUAR99SfJAABwkmVElKgjFLXZFy3_KJPyAYsKt67uLDQnXXZvpL6gJ3ctyP-otMDp-Ng4m9waiFVdFcia5AyVlLXsnTQpsK_3hTMqmjtoO41vQG2Zn0Kc7SUY9ZJk-mIdOKrDZ_w4IYAvvVBX-ecqtykU23UXi6S5bQ**
+//T1RLAQHYWXG5ELaGj5iUPQr-Enh5Jnm1jxB1xYzddUN5Et3jhYtn4coNAABwodDZZuXqG-lAHs9QGYeyjILE-KmR3lqnD-0wTpEUmQH98WaW0x0fscslpO8A8uqyfWaCuTkeSQOvkit7on1Sb-qg_dnGKLmt0sWigzPhRnNfv5RnpN8lByqwZgL8VIDq3IbSrHGVyvtZ55KC6n1ttQ**
 
 ```
 
@@ -57,10 +57,10 @@ console.log(token);
 ```js
 // Encode from map
 const subject = 'Alice';
-const payload =  new Map(['bar','baz'],['foo','bar']);
+const payload =  new Map(['foo','bar'],['bar','baz']);
 const token = otk.encodeMap(payload, subject);
 console.log(token);
-//T1RLAQFlvrOAyfVCUn_0sN67RDBKPGNdLBBSiZoVomInlqudMaCohHqMAABwkdA9YvGU8qDs1GsbNjbreqU-zxSJKxUfqj5wGDIftJxwtMOQAuG0j5C-SAUJFJNIDkXsVKCXLocu5zC6CYR3EfKDnKaqtcxfpz7Ln3LSydLri3lcTUvPazZ0xbaADlfe5dAy-lC18FXCA9Y-LPsuXA**
+////T1RLAQHYWXG5ELaGj5iUPQr-Enh5Jnm1jxB1xYzddUN5Et3jhYtn4coNAABwodDZZuXqG-lAHs9QGYeyjILE-KmR3lqnD-0wTpEUmQH98WaW0x0fscslpO8A8uqyfWaCuTkeSQOvkit7on1Sb-qg_dnGKLmt0sWigzPhRnNfv5RnpN8lByqwZgL8VIDq3IbSrHGVyvtZ55KC6n1ttQ**
 
 
 ```
