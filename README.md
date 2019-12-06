@@ -1,6 +1,8 @@
 # opentoken
 
 [![CircleCI](https://circleci.com/gh/xarenard/opentoken/tree/master.svg?style=svg)](https://circleci.com/gh/xarenard/opentoken/tree/master)
+[![codecov](https://codecov.io/gh/xarenard/opentoken/branch/master/graph/badge.svg)](https://codecov.io/gh/xarenard/opentoken)
+[![Known Vulnerabilities](https://snyk.io/test/github/xarenard/opentoken/badge.svg?targetFile=package.json)](https://snyk.io/test/github/xarenard/opentoken?targetFile=package.json)
 
 - [About](#about)
 - [Installation](#installation)

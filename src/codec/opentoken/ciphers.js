@@ -20,10 +20,6 @@ class OpenTokenCipher {
 		{algorithm: 'aes-128-cbc', ivLength: 16, keyLength: 128},
 		{algorithm: 'des-ede3-cbc', ivLength: 8, keyLength: 192}];
 
-	static id(cipher) {
-		return OpenTokenCipher._ciphers[cipher].id;
-	}
-
 	static algorithm(id) {
 		return OpenTokenCipher._ciphers[id].algorithm;
 	}

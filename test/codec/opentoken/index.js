@@ -63,7 +63,6 @@ describe('OpenToken Test Case', () => {
             sinon.stub(OpenTokenUtils, 'date').returns(new Date('2013-04-02T02:40:32Z'));
             const payload = otk.validate(TEST_CASES.sample1.token,'joe');
             assert.equal(TEST_CASES.sample1.value, payload);
-
         });
         it('With  issued token after date limit should failed', () => {
             const otk = new OpenTokenProvider('2Federate', 'joe');

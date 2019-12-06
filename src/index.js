@@ -88,12 +88,8 @@ class OpenToken {
 		return OpenTokenUtils.dataToMap(payload);
 	}
 
-	validateToken(token, subject) {
+	validate(token, subject) {
 		return this._openTokenProvider.validate(token, subject);
-	}
-
-	get options(){
-		return null;
 	}
 }
 
