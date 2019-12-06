@@ -54,6 +54,7 @@ jobs:
           name: report-coverage
           command: |
             mkdir coverage
+            mkdir .nyc_output
             npm run report-coverage
 
   audit:
