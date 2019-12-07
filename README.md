@@ -113,10 +113,10 @@ console.log(data);
 ##### Constructor
 
 
-| Arguments     |  Value                  | Required |      Description              |    Default Value           |          
+| Arguments     |  Type                  | Required |      Description              |    Default Value           |          
 | ------------ | ------------------------|------------|-------------------------------| ---------------------------
-| password     | any password            |Yes         |  Password                     |  N/A                       |
-| options {}   |  {notAfter, renewUntil, cipher} | No | OpenToken validation options  |  {notAfter:300, renewUntil:300,OpenToken.CIPHER_AES_256_CBC}|
+| password     | string            |Yes         |  Password                     |  N/A                       |
+| options {}   |  {notAfter, renewUntil, cipher} | No | OpenToken validation options  |  {notAfter:300,renewUntil:300,OpenToken.CIPHER_AES_256_CBC}|
 
 
 ##### Encoding parameters
