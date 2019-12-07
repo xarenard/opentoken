@@ -17,7 +17,12 @@
     "report-coverage": "npm run coverage && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "dist": "npm run clean && npm run build && npm test && npm run lint && npm run audit"
   },
-  "keywords": [],
+  "keywords": [
+    "opentoken",
+    "authentication",
+    "token",
+    "federation"
+  ],
   "bugs": {
     "url": "https://github.com/xarenard/opentoken/issues",
     "email": "xagithub@gmail.com"

@@ -16,10 +16,12 @@
 <a name="about"></a>
 ## About
 
-OpenToken implementation (<a href="https://tools.ietf.org/html/draft-smith-opentoken-02" target="_blank">OpenToken Draft RFC</a>)
+OpenToken implementation
 
+[https://tools.ietf.org/html/draft-smith-opentoken-02](https://tools.ietf.org/html/draft-smith-opentoken-02)
 
 <a name="installation"></a>
+
 ## Installation
 ```
 npm install --save @cibel/opentoken
@@ -48,7 +50,7 @@ const otk = new OpenToken('mypassword',{notAfter: 300,renewUntil: 300, cipher: O
 
 ##### Encoding from raw data
 ```js
-/// Encode from raw OpenToken format
+//Encode from raw OpenToken format
 const subject = 'Alice';
 const payload = 'foo=bar\nbar=baz';
 const token = otk.encode(payload, subject);
@@ -64,7 +66,7 @@ const subject = 'Alice';
 const payload =  new Map(['foo','bar'],['bar','baz']);
 const token = otk.encodeMap(payload, subject);
 console.log(token);
-////T1RLAQHYWXG5ELaGj5iUPQr-Enh5Jnm1jxB1xYzddUN5Et3jhYtn4coNAABwodDZZuXqG-lAHs9QGYeyjILE-KmR3lqnD-0wTpEUmQH98WaW0x0fscslpO8A8uqyfWaCuTkeSQOvkit7on1Sb-qg_dnGKLmt0sWigzPhRnNfv5RnpN8lByqwZgL8VIDq3IbSrHGVyvtZ55KC6n1ttQ**
+//T1RLAQHYWXG5ELaGj5iUPQr-Enh5Jnm1jxB1xYzddUN5Et3jhYtn4coNAABwodDZZuXqG-lAHs9QGYeyjILE-KmR3lqnD-0wTpEUmQH98WaW0x0fscslpO8A8uqyfWaCuTkeSQOvkit7on1Sb-qg_dnGKLmt0sWigzPhRnNfv5RnpN8lByqwZgL8VIDq3IbSrHGVyvtZ55KC6n1ttQ**
 
 
 ```
@@ -92,13 +94,12 @@ console.log(data);
 #### Validation
 ```js
 const otk = new OpenToken('mypassword');
-
 const data = otk.validate(token);
 
-//or if we want to validate the subject
+//If we want to validate the subject as well
 const subject = 'Alice';
 const data = otk.validate(token,subject);
-console.log(data);//bar=be\nfoo=bar
+console.log(data);
 ```
 
 <a name="configuration"></a>
@@ -109,56 +110,58 @@ console.log(data);//bar=be\nfoo=bar
 - OpenToken.CIPHER_AES_128_CBC 
 - OpenToken.CIPHER_DES_TRIPLE_168_CBC             
 
-##### Constructor parameters
+##### Constructor
 
 
-| Parameters   |  Value                  | Mandatory  |      Description              |    Default Value           |          
+| Arguments     |  Value                  | Required |      Description              |    Default Value           |          
 | ------------ | ------------------------|------------|-------------------------------| ---------------------------
 | password     | any password            |Yes         |  Password                     |  N/A                       |
-| options {}   |  {notAfter, renewUntil, cipher} | No | OpenToken validation Options  |  {notAfter:300, renewUntil:300,OpenToken.CIPHER_AES_256_CBC}|
+| options {}   |  {notAfter, renewUntil, cipher} | No | OpenToken validation options  |  {notAfter:300, renewUntil:300,OpenToken.CIPHER_AES_256_CBC}|
 
 
 ##### Encoding parameters
 
 `[token]=encode(payload, subject)`
 
-| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument    | Required  | Type                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|payload      | Yes        |string                | None |  Raw OpenToken payload                   | N/A             |
-|subject      | No        |string                | None |  OpenToken subject to match with                  | N/A             |
+|payload      | Yes        |string                | N/A |  Raw OpenToken payload                   | N/A             |
+|subject      | No        |string                | 'opentoken' |  OpenToken subject to match with                  | N/A             |
 
 
 `[token]=encodeMap(payload, subject)`
 
-| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument    | Required | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|payload      | Yes        |Map                | None |  Key value map                  | N/A             |
-|subject      | No        |string                | None |  OpenToken subject to match with                   | N/A             |
+|payload      | Yes        |Map                | N/A |  Key value Opentoken format                  | N/A             |
+|subject      | No        |string                | 'opentoken' |  OpenToken subject to match with                   | N/A             |
 
 ##### Decoding parameters
 `[payload]=decode(token)`
 
-| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument    | Required | Type                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|token      | Yes         |string                 | None |  OpenToken payload    | N/A             |
+|token      | Yes         |string                 | N/A |  OpenToken payload    | N/A             |
 
 
 `[payloadAsMap]=decodeAsMap(token)`
 
-| Argument   | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument   | Required | Type                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|token      | y         |string                 | None |  OpenToken payload as Map       | N/A             |
+|token      | Yes         |string                 | N/A |  OpenToken payload as Map       | N/A             |
 
 ##### Validate parameters
 `[payload]=validate(token,subject)`
 
-| Argument    | Mandatory | Value                   |  Default |   Description                            | Default value         |
+| Argument    | Required | Value                   |  Default |   Description                            | Default value         |
 |------------|-----------|---------------------------|-------|---------------------------------|-----------------|
-|token       | Yes         |string                 | None |  OpenToken payload    | N/A             |
-|subject     | No          |string                 | None |  OpenToken subject to match with    | N/A             |
+|token       | Yes         |string                 | N/A |  OpenToken payload    | N/A             |
+|subject     | No          |string                 | N/A |  OpenToken subject to match with    | N/A             |
        
 <a name="references"></a>
 ## References
+
+[https://tools.ietf.org/html/draft-smith-opentoken-02](https://tools.ietf.org/html/draft-smith-opentoken-02)
 <a name="license"></a>
 ## License
 `@cibel/opentoken` is [MIT licensed](./LICENSE)
