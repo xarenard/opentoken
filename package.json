@@ -1,6 +1,6 @@
 {
   "name": "@cibel/opentoken",
-  "version": "0.7.6",
+  "version": "0.7.9",
   "private": false,
   "description": "OpenToken implementation",
   "main": "dist/index.js",
