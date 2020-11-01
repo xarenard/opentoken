@@ -39,13 +39,13 @@
     "dist"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
+    "@babel/cli": "^7.12.1",
     "@babel/core": "^7.7.4",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
     "@istanbuljs/nyc-config-babel": "^2.1.1",
-    "audit-ci": "^2.4.2",
+    "audit-ci": "^3.1.1",
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.2.0",
@@ -54,7 +54,7 @@
     "eslint": "^6.7.2",
     "jdoc": "^0.2.0",
     "jsdoc": "^3.6.3",
-    "mocha": "^6.2.2",
+    "mocha": "^8.2.0",
     "nyc": "^14.1.1",
     "rimraf": "^3.0.0",
     "sinon": "^7.5.0"
